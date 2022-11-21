@@ -26,7 +26,7 @@ func main() {
 
 	
 
-	consumer.SubscribeTopics([]string{"default"}, nil)
+	consumer.SubscribeTopics([]string{"email_topic"}, nil)
 	
 	defer consumer.Close()
 
