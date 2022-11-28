@@ -39,15 +39,27 @@ func main() {
 		}
 
 		fmt.Printf("Message on %s: %s\n", msg.TopicPartition, string(msg.Value))
-		var message map[string]interface{}
+		// var message map[string]interface{}
+		var message struct{
+			AmbassadorEmail string
+			AmbassadorRevenue float32
+			Code string
+			Id int
+			AdminRevenue float32
+		}
 
 		json.Unmarshal(msg.Value, &message)
 
-		ambassadorMessage := []byte(fmt.Sprintf("You earned $%f from the link #%s", message["ambassadorRevenue"], message["code"]))
+		// emailAmbassador, ok := message["ambassadorEmail"].(string)
+		// if !ok {
+		// 	emailAmbassador = "unknown"
+		// }
 
-		smtp.SendMail("host.docker.internal:1025", nil, "no-reply@email.com", []string{message["ambassadorEmail"].(string)}, ambassadorMessage)
+		ambassadorMessage := []byte(fmt.Sprintf("You earned $%f from the link #%s", message.AmbassadorRevenue, message.Code))
 
-		adminMessage := []byte(fmt.Sprintf("Order #%d with a total of $%f has been completed",message["id"], message["adminRevenue"]))
+		smtp.SendMail("host.docker.internal:1025", nil, "no-reply@email.com", []string{message.AmbassadorEmail}, ambassadorMessage)
+
+		adminMessage := []byte(fmt.Sprintf("Order #%d with a total of $%f has been completed",message.Id, message.AdminRevenue))
 
 		smtp.SendMail("host.docker.internal:1025", nil, "no-reply@email.com", []string{"admin@admin.com"}, adminMessage)
 	}
