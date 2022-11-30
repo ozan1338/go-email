@@ -1,0 +1,18 @@
+version: '3'
+services:
+  email_backend:
+    build: 
+      context: .
+      dockerfile: prod.dockerfile
+    image: ozan/email:0.0.1
+    environment: 
+      BOOTSTRAP_SERVERS: pkc-ew3qg.asia-southeast2.gcp.confluent.cloud:9092
+      SECURITY_PROTOCOL: SASL_SSL
+      SASL_USERNAME: ZRITSDHTM4YORCX3
+      SASL_PASSWORD: iOJVSZ5sHVRnmunF7VvCw+lC1iADXyNZGeYuVlZZfUlvcvUn4fotwbsxRoW2WY2W
+      SASL_MECHANISM: PLAIN
+      KAFKA_TOPIC: email_topic
+      EMAIL_HOST: smtp.mailtrap.io
+      EMAIL_PORT: 2525
+      EMAIL_USERNAME: 8a4b003090dd6f
+      EMAIL_PASSWORD: b6dca5530a0733
